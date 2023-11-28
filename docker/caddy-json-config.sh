@@ -1,8 +1,6 @@
 #!/bin/bash
 source /opt/includes.sh
 
-figlet -m "DomainPilot"
-
 cPrint info "Starting up the container..."
 # File where the JSON configuration will be stored
 CADDY_CONFIG_JSON="/etc/caddy/config.json"
@@ -90,8 +88,15 @@ update_caddy_json_config() {
 
 caddy start --config $CADDY_CONFIG_JSON
 
+
+figlet "DomainPilot"
+echo -e "${cl_success}Your Trusted Copilot for Secure Web Traffic${cl_reset}"
+echo -e "${cl_info}By AndersonPEM <https://github.com/andersonpem>${cl_reset}"
+cPrint info "Make sure to add the env var ${cl_info}'CADDY_VIRTUAL_HOST'${cl_reset} to your containers with the domain name you want to use."
+cPrint info "Make sure to add the network ${cl_info}'domainpilot-proxy'${cl_reset} for the containers you want to use with DomainPilot."
+cPrint status "Listening to Docker container events..."
 # Listen for Docker start and die events
-cPrint info "Startup finished. Listening to Docker events."
+
 docker events --filter 'event=start' --filter 'event=die' --format '{{json .}}' | while read event; do
     container_name=$(echo $event | jq -r '.Actor.Attributes.name')
     event_status=$(echo $event | jq -r '.status')

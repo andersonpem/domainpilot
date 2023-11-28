@@ -2,7 +2,7 @@
 FROM caddy:2
 
 # Install Docker CLI, jq, and figlet
-RUN apk add --no-cache docker-cli jq figlet bash nss nss-tools
+RUN apk add --no-cache docker-cli jq figlet bash nss nss-tools nano
 
 # Add your custom script to the container
 ADD docker/caddy-json-config.sh /usr/local/bin/domainpilot
