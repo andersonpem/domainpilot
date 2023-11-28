@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  caddy-proxy:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    environment:
+      - DEBUG=0
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./caddy_data:/data
+      - ./caddy_config:/config
+    ports:
+      - "8080:80"   # Map HTTP port
+      - "443:443" # Map HTTPS port
+    networks:
+        - caddy-proxy
+    restart: unless-stopped
+
+networks:
+    caddy-proxy:
+        external: true
