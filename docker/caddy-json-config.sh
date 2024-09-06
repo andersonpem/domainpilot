@@ -50,7 +50,7 @@ update_caddy_json_config() {
     local action=$2
 
     # Extract domain name using 'CADDY_VIRTUAL_HOST' environment variable
-    local domain=$(docker inspect --format '{{range $index, $value := .Config.Env}}{{println $value}}{{end}}' $container_name | grep 'CADDY_VIRTUAL_HOST=' | cut -d '=' -f2)
+    local domain=$(docker inspect --format '{{range $index, $value := .Config.Env}}{{println $value}}{{end}}' $container_name | grep 'DOMAINPILOT_VHOST=' | cut -d '=' -f2)
 
     if [ -z "$domain" ]; then
         cPrint info "No domain found for container $cL_info$container_name$cl_reset"
